@@ -1,5 +1,6 @@
 package com.github.fruitsamurai.support.area.entity;
 
+import com.github.fruitsamurai.framework.base.entity.BaseEntity;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/11/2 0002.
  */
-public class Area {
+public class Area extends BaseEntity{
 
     private String name;
 

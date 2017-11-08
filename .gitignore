@@ -1,6 +1,7 @@
-# Created by .ignore support plugin (hsz.mobi)  
-  
-.gradle  
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+.gradle/
+*.iml
 /local.properties  
 /.idea/workspace.xml  
 /.idea/libraries  
@@ -35,6 +36,4 @@ proguard/
 # Log Files  
 *.log  
   
-# Others  
-.idea/  
-*.iml  
+# Others
