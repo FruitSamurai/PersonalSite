@@ -7,11 +7,14 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by Administrator on 2017/11/2 0002.
@@ -41,21 +44,36 @@ public class IpUtils {
 
     }
 
+    /**
+     * 获取ip地址的IP信息
+     * @param ip
+     * @return
+     */
     public static String getIpInfo(String ip){
         HttpGet httpGet = new HttpGet(baseUrl+ip);
         try {
             HttpResponse response = client.execute(httpGet);
-            if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
-                HttpEntity entity = response.getEntity();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent(),"UTF-8"));
-                String tmp;
-                String content = "";
-                while((tmp = reader.readLine()) != null){
-                    content += tmp+"\r\n";
-                }
-                return content;
+            URL url = new URL(baseUrl+ip);
+            URLConnection connection = url.openConnection();
+            connection.connect();
+            String line = "";
+            String tmp;
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
+            while((tmp = in.readLine())!=null){
+                line+=tmp;
             }
-        } catch (IOException e) {
+            return line;
+//            if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+//                HttpEntity entity = response.getEntity();
+//                BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent(),"UTF-8"));
+//                String tmp;
+//                String content = "";
+//                while((tmp = reader.readLine()) != null){
+//                    content += tmp+"\r\n";
+//                }
+//                return content;
+//            }
+        } catch (Exception e) {
             e.printStackTrace();
         }finally {
             try{
